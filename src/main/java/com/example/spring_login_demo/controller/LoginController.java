@@ -21,8 +21,8 @@ public class LoginController {
         if (message != null) {
             model.addAttribute("message", message);
         }
-        model.addAttribute("users", userService.listUsers()); // lista usuários na tela
-        return "login";
+        model.addAttribute("users", userService.listUsers());
+        return "login"; // renderiza login.html
     }
 
     @PostMapping("/register")
@@ -31,8 +31,7 @@ public class LoginController {
                            Model model) {
         userService.registerUser(username, pwd);
         model.addAttribute("message", "Usuário registrado com sucesso!");
-        model.addAttribute("users", userService.listUsers());
-        return "login";
+        return "redirect:/login"; // redireciona para login com mensagem
     }
 
     @PostMapping("/login")
@@ -40,19 +39,24 @@ public class LoginController {
                         @RequestParam String pwd,
                         Model model) {
         if (userService.validateLogin(username, pwd)) {
-            model.addAttribute("message", "✅ Login bem-sucedido!");
+            // Se login for válido, redireciona para home
+            return "redirect:/home";
         } else {
             model.addAttribute("message", "❌ Usuário ou senha incorretos!");
+            model.addAttribute("users", userService.listUsers());
+            return "login";
         }
-        model.addAttribute("users", userService.listUsers());
-        return "login";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
         userService.deleteUser(id);
         model.addAttribute("message", "Usuário deletado com sucesso!");
-        model.addAttribute("users", userService.listUsers());
-        return "login";
+        return "redirect:/login"; // volta para login com mensagem
+    }
+
+    @GetMapping("/home")
+    public String homePage() {
+        return "home"; // renderiza home.html
     }
 }
