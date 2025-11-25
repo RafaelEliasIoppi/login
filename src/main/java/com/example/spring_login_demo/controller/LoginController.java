@@ -47,13 +47,20 @@ public class LoginController {
             return "login";
         }
     }
-
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        userService.deleteUser(id);
-        model.addAttribute("message", "Usuário deletado com sucesso!");
-        return "redirect:/login"; // volta para login com mensagem
+    public String delete(@PathVariable Long id,
+                        @RequestParam String pwd,
+                        Model model) {
+        if (userService.validateDelete(id, pwd)) {
+            userService.deleteUser(id);
+            model.addAttribute("message", "Usuário deletado com sucesso!");
+        } else {
+            model.addAttribute("message", "❌ Senha incorreta. Não foi possível deletar.");
+        }
+        model.addAttribute("users", userService.listUsers());
+        return "login";
     }
+
 
     @GetMapping("/home")
     public String homePage() {

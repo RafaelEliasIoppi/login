@@ -140,15 +140,16 @@
         <th>Usuário</th>
         <th>Ações</th>
       </tr>
-      <tr th:each="user : ${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.username}"></td>
-        <td>
-          <form th:action="@{/delete/{id}(id=${user.id})}" method="POST" style="display:inline;">
-            <button type="submit" class="delete-btn">Deletar</button>
-          </form>
-        </td>
-      </tr>
+        <tr th:each="user : ${users}">
+      <td th:text="${user.id}"></td>
+      <td th:text="${user.username}"></td>
+      <td>
+        <form th:action="@{/delete/{id}(id=${user.id})}" method="POST" style="display:inline;">
+          <input type="password" name="pwd" placeholder="Digite a senha" required>
+          <button type="submit" class="delete-btn">Deletar</button>
+        </form>
+      </td>
+    </tr>
     </table>
   </div>
 </body>
