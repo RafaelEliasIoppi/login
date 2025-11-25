@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Seguro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    button {
+      background: #4facfe;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #00c6fb;
+    }
+
+    .message {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      text-align: center;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+
+    .delete-btn {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background: #e60000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Mensagem de feedback -->
+    <div th:if="${message}" th:text="${message}" class="message"></div>
+
+    <!-- Cadastro -->
+    <h2>Cadastro</h2>
+    <form action="/register" method="POST">
+      <label>Usuário:</label>
+      <input type="text" name="username" placeholder="Digite seu usuário" required>
+      
+      <label>Senha:</label>
+      <input type="password" name="pwd" placeholder="Digite sua senha" required>
+      
+      <button type="submit">Registrar</button>
+    </form>
+
+    <!-- Login -->
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+      <label>Usuário:</label>
+      <input type="text" name="username" placeholder="Digite seu usuário" required>
+      
+      <label>Senha:</label>
+      <input type="password" name="pwd" placeholder="Digite sua senha" required>
+      
+      <button type="submit">Entrar</button>
+    </form>
+
+    <!-- Tabela de usuários -->
+    <h2>Usuários Registrados</h2>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Usuário</th>
+        <th>Ações</th>
+      </tr>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td>
+          <form th:action="@{/delete/{id}(id=${user.id})}" method="POST" style="display:inline;">
+            <button type="submit" class="delete-btn">Deletar</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

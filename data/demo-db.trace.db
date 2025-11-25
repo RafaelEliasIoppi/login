@@ -1,0 +1,6 @@
+2025-11-25 15:10:13.072363Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "select u1_0.id,u1_0.password_hash,u1_0.username from [*]user u1_0"; expected "identifier"; SQL statement:
+select u1_0.id,u1_0.password_hash,u1_0.username from user u1_0 [42001-240]
+2025-11-25 15:12:13.693481Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+select u1_0.id,u1_0.password_hash,u1_0.username from users u1_0 [42104-240]
